@@ -34,7 +34,7 @@ export const employees = [
     },
     {
         _id: uuid(),
-        name: 'Leader',
+        name: 'DLeader',
         phone: 123456789,
         email: 'leader.kumar@org.com',
         designation: 'Leader',
@@ -43,7 +43,7 @@ export const employees = [
     },
     {
         _id: uuid(),
-        name: 'Member',
+        name: 'DMember',
         phone: 123456789,
         email: 'member.kumar@org.com',
         designation: 'Member',
@@ -52,7 +52,7 @@ export const employees = [
     },
     {
         _id: uuid(),
-        name: 'Leader',
+        name: 'ELeader',
         phone: 123456789,
         email: 'leader.kumar@org.com',
         designation: 'Leader',
@@ -61,7 +61,7 @@ export const employees = [
     },
     {
         _id: uuid(),
-        name: 'Member',
+        name: 'EMember',
         phone: 123456789,
         email: 'member.kumar@org.com',
         designation: 'Member',
@@ -70,7 +70,7 @@ export const employees = [
     },
     {
         _id: uuid(),
-        name: 'Leader',
+        name: 'SLeader',
         phone: 123456789,
         email: 'leader.kumar@org.com',
         designation: 'Leader',
@@ -79,11 +79,29 @@ export const employees = [
     },
     {
         _id: uuid(),
-        name: 'Member',
+        name: 'SMember',
         phone: 123456789,
         email: 'member.kumar@org.com',
         designation: 'Member',
         team: 'STeam1',
+        department: 'Staff',
+    },
+]
+
+export const teams = [
+    {
+        _id: uuid(),
+        name: 'DTeam1',
+        department: 'Design',
+    },
+    {
+        _id: uuid(),
+        name: 'ETeam1',
+        department: 'Engineering',
+    },
+    {
+        _id: uuid(),
+        name: 'STeam1',
         department: 'Staff',
     },
 ]

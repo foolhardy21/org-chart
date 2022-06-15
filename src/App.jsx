@@ -11,6 +11,8 @@ function App() {
   const [departmentTeams, setDepartmentTeams] = useState([])
   const [currentDepartment, setCurrentDepartment] = useState('')
   const [currentTeam, setCurrentTeam] = useState('')
+  const [toBeEditedTeam, setToBeEditedTeam] = useState({})
+  const [toBeEditedMember, setToBeEditedMember] = useState({})
   const [teamMembers, setTeamMembers] = useState([])
   const [modalType, setModalType] = useState('')
 
@@ -41,6 +43,16 @@ function App() {
     setDepartmentTeams(allTeams.filter(team => team.department === currentDepartment))
   }, [allTeams])
 
+  function handleTeamEdit(teamId) {
+    setModalType('edit_team')
+    setToBeEditedTeam(allTeams.find(team => team._id === teamId))
+  }
+
+  function handleMemberEdit(memberId) {
+    setModalType('edit_member')
+    setToBeEditedMember(allEmployees.find(emp => emp._id === memberId))
+  }
+
   return (
     <div className='flx flx-column flx-center'>
       <article className={`card-dim card-shadow-xs pd-md`}>
@@ -62,6 +74,7 @@ function App() {
           departmentTeams?.map(team => <article key={team._id} onClick={() => handleTeamClick(team.name)} className="card-dim card-shadow-xs pd-md mg-xs">
             <p>{team.name}</p>
             <p>{team.department}</p>
+            <button onClick={() => handleTeamEdit(team._id)}>edit</button>
           </article>)
         }
         <article onClick={handleAddTeamClick} className="card-dim card-shadow-xs pd-md mg-xs">
@@ -74,6 +87,7 @@ function App() {
           teamMembers?.map(member => <article key={member._id} className="card-dim card-shadow-xs pd-md mg-xs">
             <p>{member.name}</p>
             <p>{member.designation}</p>
+            <button onClick={() => handleMemberEdit(member._id)}>edit</button>
           </article>)
         }
         <article onClick={handleAddMemberClick} className="card-dim card-shadow-xs pd-md mg-xs">
@@ -81,7 +95,7 @@ function App() {
         </article>
       </section>
       {
-        modalType.length > 0 && <Modal type={modalType} allEmployees={allEmployees} setAllEmployees={setAllEmployees} allTeams={allTeams} setAllTeams={setAllTeams} currentTeam={currentTeam} currentDepartment={currentDepartment} setModalType={setModalType} />
+        modalType.length > 0 && <Modal type={modalType} allEmployees={allEmployees} setAllEmployees={setAllEmployees} allTeams={allTeams} setAllTeams={setAllTeams} currentTeam={currentTeam} currentDepartment={currentDepartment} setModalType={setModalType} toBeEditedTeam={toBeEditedTeam} toBeEditedMember={toBeEditedMember} />
       }
     </div>
   );

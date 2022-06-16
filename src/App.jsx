@@ -60,11 +60,10 @@ function App() {
   return (
     <div className='flx flx-column'>
       <Header allEmployees={allEmployees} handleMemberView={handleMemberView} />
-      <CEOSection />
-      <HeadsSection handleHeadClick={handleHeadClick} />
+      <CEOSection setModalType={setModalType} setToBeEditedMember={setToBeEditedMember} />
+      <HeadsSection setModalType={setModalType} setToBeEditedMember={setToBeEditedMember} handleHeadClick={handleHeadClick} />
       <TeamsSection handleTeamClick={handleTeamClick} handleTeamEdit={handleTeamEdit} handleAddTeamClick={handleAddTeamClick} />
       <MembersSection handleMemberEdit={handleMemberEdit} handleAddMemberClick={handleAddMemberClick} handleMemberMove={handleMemberMove} handleMemberView={handleMemberView} />
-
       {
         modalType.length > 0 && <Modal type={modalType} setAllEmployees={setAllEmployees} setModalType={setModalType} />
       }

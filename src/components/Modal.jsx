@@ -64,48 +64,63 @@ const Modal = ({ type, setAllEmployees, setModalType }) => {
             <article onClick={(e) => e.stopPropagation()} className="modal-md txt-primary pd-lg bg-primary">
                 {
                     type === 'add_member'
-                        ? <form onSubmit={handleAddMember}>
-                            <input required type='text' placeholder="name" name='name' />
-                            <input required type='number' placeholder="phone no." name='phoneno' />
-                            <input required type='email' placeholder="email" name='email' />
-                            <button className="btn-solid pd-xs txt-md txt-ucase">add</button>
+                        ? <form onSubmit={handleAddMember} className='flx flx-column flx-maj-start'>
+                            <p className='txt-lg txt-500 txt-cap mg-btm-s'>add a member</p>
+                            <input required type='text' placeholder="name" name='name' className='input input-s txt-md pd-xs mg-btm-xs' />
+                            <input required type='number' placeholder="phone no." name='phoneno' className='input input-s txt-md pd-xs mg-btm-xs' />
+                            <input required type='email' placeholder="email" name='email' className='input input-s txt-md pd-xs mg-btm-xs' />
+                            <div className='flx flx-maj-end'>
+                                <button className="btn-solid bg-secondary txt-secondary pd-xs txt-md txt-ucase">add</button>
+                            </div>
                         </form>
                         : type === 'add_team'
-                            ? <form onSubmit={handleAddTeam}>
-                                <input required type='text' placeholder="name" name='name' />
-                                <button className="btn-solid pd-xs txt-md txt-ucase">add</button>
+                            ? <form onSubmit={handleAddTeam} className='flx flx-column flx-maj-start'>
+                                <p className='txt-lg txt-500 txt-cap mg-btm-s'>add a team</p>
+                                <input required type='text' placeholder="name" name='name' className='input input-s txt-md pd-xs mg-btm-xs' />
+                                <div className='flx flx-maj-end'>
+                                    <button className="btn-solid bg-secondary txt-secondary pd-xs txt-md txt-ucase">add</button>
+                                </div>
                             </form>
                             : type === 'edit_team'
-                                ? <form onSubmit={handleEditTeam}>
-                                    <input required type='text' placeholder="name" name='name' />
-                                    <button className="btn-solid pd-xs txt-md txt-ucase">update</button>
+                                ? <form onSubmit={handleEditTeam} className='flx flx-column flx-maj-start'>
+                                    <p className='txt-lg txt-500 txt-cap mg-btm-s'>update team details</p>
+                                    <input required type='text' placeholder="name" name='name' className='input input-s txt-md pd-xs mg-btm-xs' />
+                                    <div className='flx flx-maj-end'>
+                                        <button className="btn-solid bg-secondary txt-secondary pd-xs txt-md txt-ucase">update</button>
+                                    </div>
                                 </form>
                                 : type === 'edit_member'
-                                    ? <form onSubmit={handleEditMember}>
-                                        <input required type='text' placeholder="name" name='name' />
-                                        <input required type='number' placeholder="phone no." name='phoneno' />
-                                        <input required type='email' placeholder="email" name='email' />
-                                        <button className="btn-solid pd-xs txt-md txt-ucase">update</button>
+                                    ? <form onSubmit={handleEditMember} className='flx flx-column flx-maj-start'>
+                                        <p className='txt-lg txt-500 txt-cap mg-btm-s'>update member details</p>
+                                        <input required type='text' placeholder="name" name='name' className='input input-s txt-md pd-xs mg-btm-xs' />
+                                        <input required type='number' placeholder="phone no." name='phoneno' className='input input-s txt-md pd-xs mg-btm-xs' />
+                                        <input required type='email' placeholder="email" name='email' className='input input-s txt-md pd-xs mg-btm-xs' />
+                                        <div className='flx flx-maj-end'>
+                                            <button className="btn-solid bg-secondary txt-secondary pd-xs txt-md txt-ucase">update</button>
+                                        </div>
                                     </form>
                                     : type === 'move_member'
-                                        ? <form onSubmit={handleMoveMember}>
+                                        ? <form onSubmit={handleMoveMember} className='flx flx-column'>
+                                            <p className='txt-lg txt-500 txt-cap mg-btm-s'>move to</p>
                                             {
                                                 allTeams?.map(team =>
-                                                    <label key={team._id}>
-                                                        <input type='radio' name='team' onChange={() => setMoveToTeam({ ...team })} />
-                                                        {`${team.name} (${team.department})`}
-                                                    </label>
+                                                    toBeEditedMember.department === 'Staff' && team.department === 'Design' ? null :
+                                                        <label key={team._id} className='mg-btm-xs'>
+                                                            <input type='radio' name='team' onChange={() => setMoveToTeam({ ...team })} />
+                                                            {` ${team.name} (${team.department})`}
+                                                        </label>
                                                 )
                                             }
-                                            <button className="btn-solid pd-xs txt-md txt-ucase">update</button>
+                                            <div className='flx flx-maj-end'>
+                                                <button className="btn-solid bg-secondary txt-secondary pd-xs txt-md txt-ucase">update</button>
+                                            </div>
                                         </form>
                                         : type === 'view_member'
                                             ? <>
-                                                <p>{toBeEditedMember.name}</p>
-                                                <p>{toBeEditedMember.email}</p>
-                                                <p>{toBeEditedMember.phone}</p>
-                                                <p>{toBeEditedMember.designation}</p>
-                                                <p>{toBeEditedMember.department}</p>
+                                                <p className='txt-lg txt-cap txt-500 txt-off-primary'>{toBeEditedMember.name}</p>
+                                                <p className='txt-md txt-off-primary mg-btm-s'>{toBeEditedMember.email}</p>
+                                                <p className='txt-md txt-off-primary txt-cap mg-btm-s'>{`phone - ${toBeEditedMember.phone}`}</p>
+                                                <p className='txt-md txt-off-primary txt-cap'>{`${toBeEditedMember.designation} of ${toBeEditedMember.department ?? 'your org.'}`}</p>
                                             </>
                                             : null
                 }

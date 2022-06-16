@@ -1,4 +1,4 @@
-.header {
+.headerBorder {
   border-bottom: solid thin var(--clr-off-primary);
 }
 
@@ -6,5 +6,4 @@
   top: 100%;
   left: 0;
   width: 100%;
-  /* border: solid thin; */
 }

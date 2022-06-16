@@ -22,7 +22,7 @@ const Header = ({ allEmployees, handleMemberView }) => {
     }
 
     return (
-        <header className={`flx flx-maj-even flx-min-center ${styles.header} mg-btm-md`}>
+        <header className={`flx flx-maj-even flx-min-center ${styles.headerBorder} mg-btm-md`}>
             <p className="txt-xlg txt-500 txt-cap txt-off-primary pd-md">your org.</p>
             <div className="flx flx-min-center pos-relative">
                 <input type='text' placeholder='name, email or phone...' value={searchQuery} onChange={(e => setSearchQuery(e.target.value))} className='input input-md txt-md pd-xs' />

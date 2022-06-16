@@ -1,13 +1,25 @@
 import { employees } from "../data/org.data";
+import styles from './header.module.css'
+
 const ceo = employees.find(emp => emp.designation === 'CEO')
 
-const CEOSection = () => {
+const CEOSection = ({ setModalType, setToBeEditedMember }) => {
+
+    function handleCEOClick() {
+        setModalType('view_member')
+        setToBeEditedMember({ ...ceo })
+    }
 
     return (
-        <article className={`card-dim card-shadow-xs pd-md`}>
-            <p>ceo</p>
-            <p>{ceo.name}</p>
-        </article>
+        <div className={`pd-btm-s mg-md ${styles.headerBorder}`}>
+            <p className="txt-xlg txt-off-primary txt-ucase mg-btm-s">ceo</p>
+            <article className={`card-dim card-shadow-xs pd-s`}>
+                <p className="txt-off-primary txt-500 txt-md txt-cap">{ceo.name}</p>
+                <div className="flx flx-maj-end mg-top-s">
+                    <button onClick={handleCEOClick} className="btn-txt txt-md txt-off-primary">more...</button>
+                </div>
+            </article>
+        </div>
     )
 }
 

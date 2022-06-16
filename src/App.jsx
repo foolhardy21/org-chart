@@ -1,35 +1,26 @@
-import { employees, teams } from "./data/org.data";
+import { employees } from "./data/org.data";
 import { useEffect, useState } from "react";
-import Modal from "./components/Modal";
-import CEO from "./components/CEO";
-import HeadsSection from "./components/HeadsSection";
-import TeamsSection from "./components/TeamsSection";
-import MembersSection from "./components/MembersSection";
-
+import { CEOSection, HeadsSection, TeamsSection, MembersSection, Modal } from "./components";
+import { useHeads, useTeams, useMembers } from "./contexts";
 
 function App() {
   const [allEmployees, setAllEmployees] = useState(employees)
-  const [allTeams, setAllTeams] = useState(teams)
-  const [departmentTeams, setDepartmentTeams] = useState([])
-  const [currentDepartment, setCurrentDepartment] = useState('')
-  const [currentTeam, setCurrentTeam] = useState('')
-  const [toBeEditedTeam, setToBeEditedTeam] = useState({})
-  const [toBeEditedMember, setToBeEditedMember] = useState({})
-  const [teamMembers, setTeamMembers] = useState([])
   const [modalType, setModalType] = useState('')
+  const { setHeadTeams, currentHead, setCurrentHead } = useHeads()
+  const { currentTeam, allTeams, setCurrentTeam, setToBeEditedTeam } = useTeams()
+  const { setTeamMembers, setToBeEditedMember } = useMembers()
 
   useEffect(() => {
     setTeamMembers(allEmployees.filter(emp => emp.team === currentTeam))
   }, [allEmployees])
 
   useEffect(() => {
-    setDepartmentTeams(allTeams.filter(team => team.department === currentDepartment))
+    setHeadTeams(allTeams.filter(team => team.department === currentHead))
   }, [allTeams])
 
-
   function handleHeadClick(selectedDepartment) {
-    setCurrentDepartment(selectedDepartment)
-    setDepartmentTeams(allTeams.filter(team => team.department === selectedDepartment))
+    setCurrentHead(selectedDepartment)
+    setHeadTeams(allTeams.filter(team => team.department === selectedDepartment))
     setTeamMembers([])
   }
 
@@ -58,12 +49,12 @@ function App() {
 
   return (
     <div className='flx flx-column flx-center'>
-      <CEO />
+      <CEOSection />
       <HeadsSection handleHeadClick={handleHeadClick} />
-      <TeamsSection departmentTeams={departmentTeams} handleTeamClick={handleTeamClick} handleTeamEdit={handleTeamEdit} handleAddTeamClick={handleAddTeamClick} />
-      <MembersSection teamMembers={teamMembers} handleMemberEdit={handleMemberEdit} handleAddMemberClick={handleAddMemberClick} />
+      <TeamsSection handleTeamClick={handleTeamClick} handleTeamEdit={handleTeamEdit} handleAddTeamClick={handleAddTeamClick} />
+      <MembersSection handleMemberEdit={handleMemberEdit} handleAddMemberClick={handleAddMemberClick} />
       {
-        modalType.length > 0 && <Modal type={modalType} allEmployees={allEmployees} setAllEmployees={setAllEmployees} allTeams={allTeams} setAllTeams={setAllTeams} currentTeam={currentTeam} currentDepartment={currentDepartment} setModalType={setModalType} toBeEditedTeam={toBeEditedTeam} toBeEditedMember={toBeEditedMember} />
+        modalType.length > 0 && <Modal type={modalType} allEmployees={allEmployees} setAllEmployees={setAllEmployees} setModalType={setModalType} />
       }
     </div>
   );

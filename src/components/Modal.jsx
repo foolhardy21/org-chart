@@ -1,6 +1,10 @@
 import { v4 as uuid } from 'uuid'
+import { useHeads } from '../contexts'
+import { useTeams } from '../contexts'
 
-const Modal = ({ type, setAllEmployees, setAllTeams, currentTeam, currentDepartment, setModalType, toBeEditedTeam, toBeEditedMember }) => {
+const Modal = ({ type, setAllEmployees, setModalType, toBeEditedMember }) => {
+    const { currentHead } = useHeads()
+    const { setAllTeams, currentTeam, toBeEditedTeam } = useTeams()
 
     // modal types - edit member, edit a team, show employee details
 
@@ -13,7 +17,7 @@ const Modal = ({ type, setAllEmployees, setAllTeams, currentTeam, currentDepartm
             email: e.target.email.value,
             team: currentTeam,
             designation: 'Member',
-            department: currentDepartment,
+            department: currentHead,
         }
         setAllEmployees((allEmployees) => [...allEmployees, newMember])
         setModalType('')
@@ -24,7 +28,7 @@ const Modal = ({ type, setAllEmployees, setAllTeams, currentTeam, currentDepartm
         const newMember = {
             _id: uuid(),
             name: e.target.name.value,
-            department: currentDepartment,
+            department: currentHead,
         }
         setAllTeams((allTeams) => [...allTeams, newMember])
         setModalType('')

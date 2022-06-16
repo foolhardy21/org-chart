@@ -1,7 +1,7 @@
 import { employees } from "../data/org.data";
 const ceo = employees.find(emp => emp.designation === 'CEO')
 
-const CEO = () => {
+const CEOSection = () => {
 
     return (
         <article className={`card-dim card-shadow-xs pd-md`}>
@@ -11,4 +11,4 @@ const CEO = () => {
     )
 }
 
-export default CEO
+export default CEOSection

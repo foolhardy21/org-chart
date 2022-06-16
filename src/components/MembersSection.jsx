@@ -1,4 +1,7 @@
-const MembersSection = ({ teamMembers, handleMemberEdit, handleAddMemberClick }) => {
+import { useMembers } from "../contexts"
+
+const MembersSection = ({ handleMemberEdit, handleAddMemberClick }) => {
+    const { teamMembers } = useMembers()
 
     return (
         <>

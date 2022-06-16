@@ -60,8 +60,8 @@ const Modal = ({ type, setAllEmployees, setModalType }) => {
     }
 
     return (
-        <section className="flx flx-center modal-container pos-fixed tl-0 z-5">
-            <article className="modal-md txt-primary pd-lg bg-primary">
+        <section onClick={() => setModalType('')} className="flx flx-center modal-container pos-fixed tl-0 z-5">
+            <article onClick={(e) => e.stopPropagation()} className="modal-md txt-primary pd-lg bg-primary">
                 {
                     type === 'add_member'
                         ? <form onSubmit={handleAddMember}>

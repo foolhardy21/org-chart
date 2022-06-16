@@ -1,6 +1,6 @@
 import { useMembers } from "../contexts"
 
-const MembersSection = ({ handleMemberEdit, handleAddMemberClick, handleMemberMove }) => {
+const MembersSection = ({ handleMemberEdit, handleAddMemberClick, handleMemberMove, handleMemberView }) => {
     const { teamMembers } = useMembers()
 
     return (
@@ -11,6 +11,7 @@ const MembersSection = ({ handleMemberEdit, handleAddMemberClick, handleMemberMo
                     teamMembers?.map(member => <article key={member._id} className="card-dim card-shadow-xs pd-md mg-xs">
                         <p>{member.name}</p>
                         <p>{member.designation}</p>
+                        <button onClick={() => handleMemberView(member._id)}>view</button>
                         <button onClick={() => handleMemberEdit(member._id)}>edit</button>
                         <button onClick={() => handleMemberMove(member._id)}>move</button>
                     </article>)

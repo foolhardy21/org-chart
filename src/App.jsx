@@ -53,6 +53,11 @@ function App() {
     setToBeEditedMember(allEmployees.find(emp => emp._id === memberId))
   }
 
+  function handleMemberView(memberId) {
+    setModalType('view_member')
+    setToBeEditedMember(allEmployees.find(emp => emp._id === memberId))
+  }
+
   function handleSearchQueryChange(e) {
     if (e.target.value === '') {
       setSearchedEmployees([])
@@ -72,7 +77,7 @@ function App() {
             <CEOSection />
             <HeadsSection handleHeadClick={handleHeadClick} />
             <TeamsSection handleTeamClick={handleTeamClick} handleTeamEdit={handleTeamEdit} handleAddTeamClick={handleAddTeamClick} />
-            <MembersSection handleMemberEdit={handleMemberEdit} handleAddMemberClick={handleAddMemberClick} handleMemberMove={handleMemberMove} />
+            <MembersSection handleMemberEdit={handleMemberEdit} handleAddMemberClick={handleAddMemberClick} handleMemberMove={handleMemberMove} handleMemberView={handleMemberView} />
           </>
       }
       {

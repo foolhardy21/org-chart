@@ -1,5 +1,4 @@
 import { createContext, useContext, useState } from "react";
-import { teams } from "../data/org.data";
 
 const MembersContext = createContext()
 

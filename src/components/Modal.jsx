@@ -75,29 +75,39 @@ const Modal = ({ type, setAllEmployees, setModalType }) => {
                                 <input required type='text' placeholder="name" name='name' />
                                 <button className="btn-solid pd-xs txt-md txt-ucase">add</button>
                             </form>
-                            : type === 'edit_team' ? <form onSubmit={handleEditTeam}>
-                                <input required type='text' placeholder="name" name='name' />
-                                <button className="btn-solid pd-xs txt-md txt-ucase">update</button>
-                            </form>
-                                : type === 'edit_member' ? <form onSubmit={handleEditMember}>
+                            : type === 'edit_team'
+                                ? <form onSubmit={handleEditTeam}>
                                     <input required type='text' placeholder="name" name='name' />
-                                    <input required type='number' placeholder="phone no." name='phoneno' />
-                                    <input required type='email' placeholder="email" name='email' />
                                     <button className="btn-solid pd-xs txt-md txt-ucase">update</button>
                                 </form>
-                                    : type === 'move_member' ? <form onSubmit={handleMoveMember}>
-
-                                        {
-                                            allTeams?.map(team =>
-                                                <label key={team._id}>
-                                                    <input type='radio' name='team' onChange={() => setMoveToTeam({ ...team })} />
-                                                    {`${team.name} (${team.department})`}
-                                                </label>
-                                            )
-                                        }
-
+                                : type === 'edit_member'
+                                    ? <form onSubmit={handleEditMember}>
+                                        <input required type='text' placeholder="name" name='name' />
+                                        <input required type='number' placeholder="phone no." name='phoneno' />
+                                        <input required type='email' placeholder="email" name='email' />
                                         <button className="btn-solid pd-xs txt-md txt-ucase">update</button>
-                                    </form> : null
+                                    </form>
+                                    : type === 'move_member'
+                                        ? <form onSubmit={handleMoveMember}>
+                                            {
+                                                allTeams?.map(team =>
+                                                    <label key={team._id}>
+                                                        <input type='radio' name='team' onChange={() => setMoveToTeam({ ...team })} />
+                                                        {`${team.name} (${team.department})`}
+                                                    </label>
+                                                )
+                                            }
+                                            <button className="btn-solid pd-xs txt-md txt-ucase">update</button>
+                                        </form>
+                                        : type === 'view_member'
+                                            ? <>
+                                                <p>{toBeEditedMember.name}</p>
+                                                <p>{toBeEditedMember.email}</p>
+                                                <p>{toBeEditedMember.phone}</p>
+                                                <p>{toBeEditedMember.designation}</p>
+                                                <p>{toBeEditedMember.department}</p>
+                                            </>
+                                            : null
                 }
             </article>
         </section>

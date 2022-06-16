@@ -1,9 +1,11 @@
 import { employees, teams } from "./data/org.data";
 import { useEffect, useState } from "react";
 import Modal from "./components/Modal";
+import CEO from "./components/CEO";
+import HeadsSection from "./components/HeadsSection";
+import TeamsSection from "./components/TeamsSection";
+import MembersSection from "./components/MembersSection";
 
-const ceo = employees.find(emp => emp.designation === 'CEO')
-const heads = employees.filter(emp => emp.designation === 'Head')
 
 function App() {
   const [allEmployees, setAllEmployees] = useState(employees)
@@ -15,6 +17,15 @@ function App() {
   const [toBeEditedMember, setToBeEditedMember] = useState({})
   const [teamMembers, setTeamMembers] = useState([])
   const [modalType, setModalType] = useState('')
+
+  useEffect(() => {
+    setTeamMembers(allEmployees.filter(emp => emp.team === currentTeam))
+  }, [allEmployees])
+
+  useEffect(() => {
+    setDepartmentTeams(allTeams.filter(team => team.department === currentDepartment))
+  }, [allTeams])
+
 
   function handleHeadClick(selectedDepartment) {
     setCurrentDepartment(selectedDepartment)
@@ -35,14 +46,6 @@ function App() {
     setModalType('add_team')
   }
 
-  useEffect(() => {
-    setTeamMembers(allEmployees.filter(emp => emp.team === currentTeam))
-  }, [allEmployees])
-
-  useEffect(() => {
-    setDepartmentTeams(allTeams.filter(team => team.department === currentDepartment))
-  }, [allTeams])
-
   function handleTeamEdit(teamId) {
     setModalType('edit_team')
     setToBeEditedTeam(allTeams.find(team => team._id === teamId))
@@ -55,45 +58,10 @@ function App() {
 
   return (
     <div className='flx flx-column flx-center'>
-      <article className={`card-dim card-shadow-xs pd-md`}>
-        <p>ceo</p>
-        <p>{ceo.name}</p>
-      </article>
-      <p className="mg-top-md mg-top-s">heads</p>
-      <section className="flx">
-        {
-          heads?.map(head => <article key={head._id} onClick={() => handleHeadClick(head.department)} className="card-dim card-shadow-xs pd-md mg-xs">
-            <p>{head.name}</p>
-            <p>{head.department}</p>
-          </article>)
-        }
-      </section>
-      <p className="mg-top-md mg-top-s">teams</p>
-      <section className="flx">
-        {
-          departmentTeams?.map(team => <article key={team._id} onClick={() => handleTeamClick(team.name)} className="card-dim card-shadow-xs pd-md mg-xs">
-            <p>{team.name}</p>
-            <p>{team.department}</p>
-            <button onClick={() => handleTeamEdit(team._id)}>edit</button>
-          </article>)
-        }
-        <article onClick={handleAddTeamClick} className="card-dim card-shadow-xs pd-md mg-xs">
-          <p>add a team</p>
-        </article>
-      </section>
-      <p className="mg-top-md mg-top-s">members</p>
-      <section className="flx">
-        {
-          teamMembers?.map(member => <article key={member._id} className="card-dim card-shadow-xs pd-md mg-xs">
-            <p>{member.name}</p>
-            <p>{member.designation}</p>
-            <button onClick={() => handleMemberEdit(member._id)}>edit</button>
-          </article>)
-        }
-        <article onClick={handleAddMemberClick} className="card-dim card-shadow-xs pd-md mg-xs">
-          <p>add a member</p>
-        </article>
-      </section>
+      <CEO />
+      <HeadsSection handleHeadClick={handleHeadClick} />
+      <TeamsSection departmentTeams={departmentTeams} handleTeamClick={handleTeamClick} handleTeamEdit={handleTeamEdit} handleAddTeamClick={handleAddTeamClick} />
+      <MembersSection teamMembers={teamMembers} handleMemberEdit={handleMemberEdit} handleAddMemberClick={handleAddMemberClick} />
       {
         modalType.length > 0 && <Modal type={modalType} allEmployees={allEmployees} setAllEmployees={setAllEmployees} allTeams={allTeams} setAllTeams={setAllTeams} currentTeam={currentTeam} currentDepartment={currentDepartment} setModalType={setModalType} toBeEditedTeam={toBeEditedTeam} toBeEditedMember={toBeEditedMember} />
       }
@@ -102,3 +70,8 @@ function App() {
 }
 
 export default App;
+
+// move members across teams
+// remove members from the team
+// view detailed info
+// search members based on their details

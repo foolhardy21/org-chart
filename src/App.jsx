@@ -47,12 +47,17 @@ function App() {
     setToBeEditedMember(allEmployees.find(emp => emp._id === memberId))
   }
 
+  function handleMemberMove(memberId) {
+    setModalType('move_member')
+    setToBeEditedMember(allEmployees.find(emp => emp._id === memberId))
+  }
+  console.log(allEmployees)
   return (
     <div className='flx flx-column flx-center'>
       <CEOSection />
       <HeadsSection handleHeadClick={handleHeadClick} />
       <TeamsSection handleTeamClick={handleTeamClick} handleTeamEdit={handleTeamEdit} handleAddTeamClick={handleAddTeamClick} />
-      <MembersSection handleMemberEdit={handleMemberEdit} handleAddMemberClick={handleAddMemberClick} />
+      <MembersSection handleMemberEdit={handleMemberEdit} handleAddMemberClick={handleAddMemberClick} handleMemberMove={handleMemberMove} />
       {
         modalType.length > 0 && <Modal type={modalType} allEmployees={allEmployees} setAllEmployees={setAllEmployees} setModalType={setModalType} />
       }
@@ -62,7 +67,5 @@ function App() {
 
 export default App;
 
-// move members across teams
-// remove members from the team
 // view detailed info
 // search members based on their details

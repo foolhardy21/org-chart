@@ -1,9 +1,14 @@
-import { employees } from "../data/org.data";
+import { useEffect, useState } from 'react'
+import { useEmployees } from '../contexts'
 import styles from './header.module.css'
 
-const heads = employees.filter(emp => emp.designation === 'Head')
-
 const HeadsSection = ({ handleHeadClick, setModalType, setToBeEditedMember }) => {
+    const [heads, setHeads] = useState([])
+    const { allEmployees } = useEmployees()
+
+    useEffect(() => {
+        setHeads(allEmployees.filter(emp => emp.designation === 'Head'))
+    }, [allEmployees])
 
     function handleMoreClick(head) {
         setModalType('view_member')
@@ -15,7 +20,7 @@ const HeadsSection = ({ handleHeadClick, setModalType, setToBeEditedMember }) =>
             <p className="txt-lg txt-off-primary txt-ucase mg-btm-s">heads</p>
             <section className="flx">
                 {
-                    heads?.map(head => <article key={head._id} className="card-dim card-shadow-xs pd-s mg-xs">
+                    heads?.map(head => <article key={head.id} className="card-dim card-shadow-xs pd-s mg-xs">
                         <p className="txt-off-primary txt-500 txt-md txt-cap mg-btm-xs">{head.name}</p>
                         <p className="txt-md txt-off-primary">{head.department}</p>
                         <div className="flx flx-maj-end mg-top-s">

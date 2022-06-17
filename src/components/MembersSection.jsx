@@ -10,20 +10,20 @@ const MembersSection = ({ handleMemberEdit, handleAddMemberClick, handleMemberMo
             <p className="txt-lg txt-off-primary txt-ucase mg-btm-s">members</p>
             <section className="flx">
                 {
-                    teamMembers?.map(member => <article key={member._id} className="card-dim card-shadow-xs pd-md mg-xs">
+                    teamMembers?.map(member => <article key={member.id} className="card-dim card-shadow-xs pd-md mg-xs">
                         <p className="txt-off-primary txt-500 txt-md txt-cap mg-btm-xs">{member.name}</p>
                         <p className="txt-off-primary txt-md txt-cap">{member.designation}</p>
                         <div className="flx flx-maj-end mg-top-s">
-                            <button onClick={() => handleMemberEdit(member._id)} className="btn-txt txt-md txt-off-primary mg-left-xxlg">edit</button>
+                            <button onClick={() => handleMemberEdit(member.id)} className="btn-txt txt-md txt-off-primary mg-left-xxlg">edit</button>
                             <span className="mg-left-xs mg-right-xs">|</span>
                             {
                                 member.designation !== 'Leader' &&
                                 <>
-                                    <button onClick={() => handleMemberMove(member._id)} className="btn-txt txt-md txt-off-primary">move</button>
+                                    <button onClick={() => handleMemberMove(member.id)} className="btn-txt txt-md txt-off-primary">move</button>
                                     <span className="mg-left-xs mg-right-xs">|</span>
                                 </>
                             }
-                            <button onClick={() => handleMemberView(member._id)} className="btn-txt txt-md txt-off-primary">more...</button>
+                            <button onClick={() => handleMemberView(member.id)} className="btn-txt txt-md txt-off-primary">more...</button>
                         </div>
                     </article>)
                 }

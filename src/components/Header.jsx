@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
+import { useEmployees } from '../contexts'
 import styles from './header.module.css'
 
-const Header = ({ allEmployees, handleMemberView }) => {
+const Header = ({ handleMemberView }) => {
     const [searchQuery, setSearchQuery] = useState('')
     const [searchedEmployees, setSearchedEmployees] = useState([])
+    const { allEmployees } = useEmployees()
 
     useEffect(() => {
         if (searchQuery.length > 0) {
@@ -32,7 +34,7 @@ const Header = ({ allEmployees, handleMemberView }) => {
                 {
                     searchedEmployees.length > 0 && <div className={`pos-absolute bg-primary pd-s card-shadow-xs ${styles.articleSearch}`}>
                         {
-                            searchedEmployees?.map(emp => <button key={emp._id} onClick={() => handleSearchedEmployeeClick(emp._id)} className='btn-outlined b-solid b-primary txt-md txt-primary pd-xs mg-xs'>{emp.name}</button>)
+                            searchedEmployees?.map(emp => <button key={emp.id} onClick={() => handleSearchedEmployeeClick(emp.id)} className='btn-outlined b-solid b-primary txt-md txt-primary pd-xs mg-xs'>{emp.name}</button>)
                         }
                     </div>
 

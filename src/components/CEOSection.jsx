@@ -1,9 +1,16 @@
-import { employees } from "../data/org.data";
+import { useEffect, useState } from 'react'
+import { useEmployees } from '../contexts'
 import styles from './header.module.css'
 
-const ceo = employees.find(emp => emp.designation === 'CEO')
-
 const CEOSection = ({ setModalType, setToBeEditedMember }) => {
+    const [ceo, setCeo] = useState({})
+    const { allEmployees } = useEmployees()
+
+    useEffect(() => {
+        if (allEmployees.length > 0) {
+            setCeo(allEmployees.find(emp => emp.designation === 'CEO'))
+        }
+    }, [allEmployees])
 
     function handleCEOClick() {
         setModalType('view_member')

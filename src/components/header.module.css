@@ -1,0 +1,9 @@
+.headerBorder {
+  border-bottom: solid thin var(--clr-off-primary);
+}
+
+.articleSearch {
+  top: 100%;
+  left: 0;
+  width: 100%;
+}

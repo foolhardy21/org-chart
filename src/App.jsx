@@ -1,7 +1,7 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CEOSection, HeadsSection, TeamsSection, MembersSection, Modal, Header } from "./components";
 import { useHeads, useTeams, useMembers, useEmployees } from "./contexts";
+import { useInitialiseEmployees, useInitialiseTeams, useUpdateTeamMembers, useUpdateTeams } from "./hooks";
 
 function App() {
   const [modalType, setModalType] = useState('')
@@ -9,36 +9,10 @@ function App() {
   const { setHeadTeams, currentHead, setCurrentHead } = useHeads()
   const { currentTeam, allTeams, setAllTeams, setCurrentTeam, setToBeEditedTeam } = useTeams()
   const { setTeamMembers, setToBeEditedMember } = useMembers()
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await axios.get('http://localhost:3001/employees')
-        setAllEmployees([...response.data])
-      } catch (e) {
-        console.log(e)
-      }
-    })()
-  }, [])
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await axios.get('http://localhost:3001/teams')
-        setAllTeams([...response.data])
-      } catch (e) {
-        console.log(e)
-      }
-    })()
-  }, [])
-
-  useEffect(() => {
-    setTeamMembers(allEmployees.filter(emp => emp.team === currentTeam))
-  }, [allEmployees])
-
-  useEffect(() => {
-    setHeadTeams(allTeams.filter(team => team.department === currentHead))
-  }, [allTeams])
+  useInitialiseEmployees(setAllEmployees)
+  useInitialiseTeams(setAllTeams)
+  useUpdateTeams(setTeamMembers, allEmployees, currentTeam)
+  useUpdateTeamMembers(setHeadTeams, allTeams, currentHead)
 
   function handleHeadClick(selectedDepartment) {
     setCurrentHead(selectedDepartment)

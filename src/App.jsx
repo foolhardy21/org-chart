@@ -11,8 +11,8 @@ function App() {
   const { setTeamMembers, setToBeEditedMember } = useMembers()
   useInitialiseEmployees(setAllEmployees)
   useInitialiseTeams(setAllTeams)
-  useUpdateTeams(setTeamMembers, allEmployees, currentTeam)
-  useUpdateTeamMembers(setHeadTeams, allTeams, currentHead)
+  useUpdateTeams(setHeadTeams, allTeams, currentHead)
+  useUpdateTeamMembers(setTeamMembers, allEmployees, currentTeam)
 
   function handleHeadClick(selectedDepartment) {
     setCurrentHead(selectedDepartment)

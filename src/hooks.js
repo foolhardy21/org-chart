@@ -1,12 +1,11 @@
-import axios from "axios"
 import { useEffect } from "react"
+import { employees, teams } from "./data/org.data"
 
 export const useInitialiseEmployees = (setAllEmployees) => {
     useEffect(() => {
-        (async () => {
+        (() => {
             try {
-                const response = await axios.get('http://localhost:3001/employees')
-                setAllEmployees([...response.data])
+                setAllEmployees([...employees])
             } catch (e) {
                 console.log(e)
             }
@@ -19,8 +18,7 @@ export const useInitialiseTeams = (setAllTeams) => {
     useEffect(() => {
         (async () => {
             try {
-                const response = await axios.get('http://localhost:3001/teams')
-                setAllTeams([...response.data])
+                setAllTeams([...teams])
             } catch (e) {
                 console.log(e)
             }

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { CEOSection, HeadsSection, TeamsSection, MembersSection, Modal, Header } from "./components";
 import { useHeads, useTeams, useMembers, useEmployees } from "./contexts";
-import { useInitialiseEmployees, useInitialiseTeams, useUpdateTeamMembers, useUpdateTeams } from "./hooks";
+import { useInitialiseEmployees, useInitialiseTeams, useUpdateEmployeesData, useUpdateTeamMembers, useUpdateTeams } from "./hooks";
 
 function App() {
   const [modalType, setModalType] = useState('')

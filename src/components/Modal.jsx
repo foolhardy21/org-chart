@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import { v4 as uuid } from 'uuid'
 import { useTeams, useHeads, useMembers, useEmployees } from '../contexts'
+import { updateEmployeesData, updateTeamsData } from '../hooks'
 
 const Modal = ({ type, setModalType }) => {
     const [moveToTeam, setMoveToTeam] = useState({})
     const { currentHead } = useHeads()
     const { setAllTeams, currentTeam, allTeams, toBeEditedTeam } = useTeams()
     const { toBeEditedMember } = useMembers()
-    const { setAllEmployees } = useEmployees()
+    const { allEmployees, setAllEmployees } = useEmployees()
 
     function handleAddMember(e) {
         e.preventDefault()
@@ -22,6 +23,7 @@ const Modal = ({ type, setModalType }) => {
                 department: currentHead,
             }
             setAllEmployees((allEmployees) => [...allEmployees, newMember])
+            updateEmployeesData([...allEmployees, newMember])
         } catch (e) {
             console.log(e)
         } finally {
@@ -38,6 +40,7 @@ const Modal = ({ type, setModalType }) => {
                 department: currentHead,
             }
             setAllTeams((allTeams) => [...allTeams, newTeam])
+            updateTeamsData([...allTeams, newTeam])
         } catch (e) {
             console.log(e)
         } finally {
@@ -48,7 +51,9 @@ const Modal = ({ type, setModalType }) => {
     async function handleEditTeam(e) {
         e.preventDefault()
         try {
-            setAllTeams(allTeams => allTeams.map(team => team.id === toBeEditedTeam.id ? ({ ...team, name: e.target.name.value }) : team))
+            const newTeams = allTeams.map(team => team.id === toBeEditedTeam.id ? ({ ...team, name: e.target.name.value }) : team)
+            setAllTeams(newTeams)
+            updateTeamsData(newTeams)
         } catch (e) {
             console.log(e)
         } finally {
@@ -65,12 +70,13 @@ const Modal = ({ type, setModalType }) => {
                 phone: Number(e.target.phoneno.value),
                 email: e.target.email.value,
             }
-            setAllEmployees(allEmployees => allEmployees.map(emp => emp.id === toBeEditedMember.id ? ({ ...updatedMember }) : emp))
+            const newEmployees = allEmployees.map(emp => emp.id === toBeEditedMember.id ? ({ ...updatedMember }) : emp)
+            setAllEmployees(newEmployees)
+            updateEmployeesData(newEmployees)
         } catch (e) {
             console.log(e)
         } finally {
             setModalType('')
-
         }
     }
 
@@ -84,7 +90,9 @@ const Modal = ({ type, setModalType }) => {
         }
         if (moveToTeam.name) {
             try {
-                setAllEmployees(allEmployees => allEmployees.map(emp => emp.id === toBeEditedMember.id ? ({ ...updatedMember }) : emp))
+                const newEmployees = allEmployees.map(emp => emp.id === toBeEditedMember.id ? ({ ...updatedMember }) : emp)
+                setAllEmployees(newEmployees)
+                updateEmployeesData(newEmployees)
             } catch (e) {
                 console.log(e)
             } finally {

@@ -20,7 +20,5 @@ This app has following features -
 This project has used following -
 
 - React Hooks
-- JSON server
-- Axios
 - Custom hooks
 - Context API

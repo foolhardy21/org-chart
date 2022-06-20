@@ -1,31 +1,29 @@
-import axios from 'axios'
 import { useState } from 'react'
 import { v4 as uuid } from 'uuid'
 import { useTeams, useHeads, useMembers, useEmployees } from '../contexts'
+import { updateEmployeesData, updateTeamsData } from '../hooks'
 
 const Modal = ({ type, setModalType }) => {
     const [moveToTeam, setMoveToTeam] = useState({})
     const { currentHead } = useHeads()
     const { setAllTeams, currentTeam, allTeams, toBeEditedTeam } = useTeams()
     const { toBeEditedMember } = useMembers()
-    const { setAllEmployees } = useEmployees()
+    const { allEmployees, setAllEmployees } = useEmployees()
 
-    async function handleAddMember(e) {
+    function handleAddMember(e) {
         e.preventDefault()
         try {
             const newMember = {
                 id: uuid(),
                 name: e.target.name.value,
-                phoneno: e.target.phoneno.value,
+                phone: e.target.phoneno.value,
                 email: e.target.email.value,
                 team: currentTeam,
                 designation: 'Member',
                 department: currentHead,
             }
-            await axios.post('http://localhost:3001/employees', {
-                ...newMember
-            })
             setAllEmployees((allEmployees) => [...allEmployees, newMember])
+            updateEmployeesData([...allEmployees, newMember])
         } catch (e) {
             console.log(e)
         } finally {
@@ -33,7 +31,7 @@ const Modal = ({ type, setModalType }) => {
         }
     }
 
-    async function handleAddTeam(e) {
+    function handleAddTeam(e) {
         e.preventDefault()
         try {
             const newTeam = {
@@ -41,10 +39,8 @@ const Modal = ({ type, setModalType }) => {
                 name: e.target.name.value,
                 department: currentHead,
             }
-            await axios.post(`http://localhost:3001/teams`, {
-                ...newTeam
-            })
             setAllTeams((allTeams) => [...allTeams, newTeam])
+            updateTeamsData([...allTeams, newTeam])
         } catch (e) {
             console.log(e)
         } finally {
@@ -55,10 +51,9 @@ const Modal = ({ type, setModalType }) => {
     async function handleEditTeam(e) {
         e.preventDefault()
         try {
-            await axios.put(`http://localhost:3001/teams/${toBeEditedTeam.id}`, {
-                ...toBeEditedTeam, name: e.target.name.value
-            })
-            setAllTeams(allTeams => allTeams.map(team => team.id === toBeEditedTeam.id ? ({ ...team, name: e.target.name.value }) : team))
+            const newTeams = allTeams.map(team => team.id === toBeEditedTeam.id ? ({ ...team, name: e.target.name.value }) : team)
+            setAllTeams(newTeams)
+            updateTeamsData(newTeams)
         } catch (e) {
             console.log(e)
         } finally {
@@ -75,15 +70,13 @@ const Modal = ({ type, setModalType }) => {
                 phone: Number(e.target.phoneno.value),
                 email: e.target.email.value,
             }
-            await axios.put(`http://localhost:3001/employees/${toBeEditedMember.id}`, {
-                ...updatedMember
-            })
-            setAllEmployees(allEmployees => allEmployees.map(emp => emp.id === toBeEditedMember.id ? ({ ...updatedMember }) : emp))
+            const newEmployees = allEmployees.map(emp => emp.id === toBeEditedMember.id ? ({ ...updatedMember }) : emp)
+            setAllEmployees(newEmployees)
+            updateEmployeesData(newEmployees)
         } catch (e) {
             console.log(e)
         } finally {
             setModalType('')
-
         }
     }
 
@@ -97,10 +90,9 @@ const Modal = ({ type, setModalType }) => {
         }
         if (moveToTeam.name) {
             try {
-                await axios.put(`http://localhost:3001/employees/${toBeEditedMember.id}`, {
-                    ...updatedMember
-                })
-                setAllEmployees(allEmployees => allEmployees.map(emp => emp.id === toBeEditedMember.id ? ({ ...updatedMember }) : emp))
+                const newEmployees = allEmployees.map(emp => emp.id === toBeEditedMember.id ? ({ ...updatedMember }) : emp)
+                setAllEmployees(newEmployees)
+                updateEmployeesData(newEmployees)
             } catch (e) {
                 console.log(e)
             } finally {

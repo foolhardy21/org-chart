@@ -1,12 +1,12 @@
-import axios from "axios"
 import { useEffect } from "react"
+import { employees, teams } from "./data/org.data"
 
 export const useInitialiseEmployees = (setAllEmployees) => {
     useEffect(() => {
-        (async () => {
+        (() => {
             try {
-                const response = await axios.get('http://localhost:3001/employees')
-                setAllEmployees([...response.data])
+                localStorage.setItem('employees', JSON.stringify(employees))
+                setAllEmployees([...employees])
             } catch (e) {
                 console.log(e)
             }
@@ -19,8 +19,8 @@ export const useInitialiseTeams = (setAllTeams) => {
     useEffect(() => {
         (async () => {
             try {
-                const response = await axios.get('http://localhost:3001/teams')
-                setAllTeams([...response.data])
+                localStorage.setItem('teams', JSON.stringify(teams))
+                setAllTeams([...teams])
             } catch (e) {
                 console.log(e)
             }
@@ -34,6 +34,14 @@ export const useInitialiseCeo = (allEmployees, setCeo) => {
             setCeo(allEmployees.find(emp => emp.designation === 'CEO'))
         }
     }, [allEmployees])
+}
+
+export const updateEmployeesData = (newEmployees) => {
+    localStorage.setItem('employees', JSON.stringify([...newEmployees]))
+}
+
+export const updateTeamsData = (newTeams) => {
+    localStorage.setItem('teams', JSON.stringify([...newTeams]))
 }
 
 export const useUpdateTeamMembers = (setTeamMembers, allEmployees, currentTeam) => {
